@@ -1,0 +1,7 @@
+.LoginPage {
+  background-color: #ffffff;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}

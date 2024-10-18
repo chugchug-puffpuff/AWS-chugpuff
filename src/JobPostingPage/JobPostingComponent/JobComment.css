@@ -1,0 +1,32 @@
+.JobComment-frame-17 {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+  width: 1176px;
+}
+
+.JobComment-div-2 {
+  align-self: stretch;
+  color: var(--variable-collection-gray-1);
+  font-family: "Pretendard Variable-Bold", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.6px;
+  line-height: 30px;
+  margin-top: -10px;
+  margin-bottom: -20px;
+  position: relative;
+}
+
+.JobComment-span {
+  font-weight: 600;
+  letter-spacing: -0.12px;
+}
+
+.JobComment-text-wrapper-12 {
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  letter-spacing: -0.12px;
+}

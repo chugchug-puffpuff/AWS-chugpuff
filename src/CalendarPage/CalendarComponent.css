@@ -1,0 +1,456 @@
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between; /* 양쪽 끝에 요소 배치 */
+  align-items: center; /* 수직 중앙 정렬 */
+  position: relative;
+  padding-bottom: 40px;
+}
+
+.rbc-btn-group {
+  position: relative;
+  left: 0;
+}
+
+.rbc-toolbar-label {
+  display: flex; /* 플렉스 박스로 설정 */
+  align-items: center; /* 수직 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  flex: 1; /* 가운데 요소가 가능한 공간을 모두 차지하도록 설정 */
+}
+
+.rbc-toolbar-img {
+  cursor: pointer;
+  width: 24px;
+  position: relative;
+  height: 24px;
+  margin: 0 10px;
+}
+
+.rbc-toolbar-text {
+  color: #000000;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  font-size: 32px;
+  margin-top: -1.82px;
+}
+
+.rbc-row.rbc-month-header {
+  margin-bottom: 40px;
+}
+
+.Calendar-line-1 {
+  align-self: stretch;
+  height: 1px;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  top: -15px;
+  left: 0px;
+}
+
+.Calendar-line-2 {
+  align-self: stretch;
+  height: 1px;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  top: 35px;
+  left: 0px;
+}
+
+.Calendar-line-3 {
+  align-self: stretch;
+  height: 1px;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  top: 1120px;
+  left: 0px;
+}
+
+.Calendar-text-wrapper {
+  color: var(--variable-collection-main-black);
+  font-family: "Pretendard Variable-SemiBold", Helvetica;
+  font-size: 24px;
+  font-weight: 600;
+  left: 310px;
+  letter-spacing: -0.72px;
+  line-height: normal;
+  position: absolute;
+  top: 175px;
+}
+
+.Calendar-frame {
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: var(--variable-collection-gray-3);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-radius: 16px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  left: 310px;
+  overflow: hidden;
+  padding: 42px 30px 56px;
+  position: absolute;
+  top: 227px;
+  width: 1230px;
+}
+
+.calendar-container {
+  width: 100%;
+  text-align: center;
+}
+
+.add-event-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-event-button:hover {
+  background-color: #0056b3;
+}
+
+.day-cell {
+  position: relative;
+}
+
+.day-cell .rbc-event {
+  background-color: #f0f8ff; /* 이벤트 배경색 */
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.Calendar-add-frame {
+  cursor: pointer;
+  align-items: center;
+  background-color: var(--variable-collection-button-navy);
+  border-radius: 12px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 12px 28px;
+  position: relative;
+  margin-top: 50px;
+}
+
+.Calendar-add-text {
+  color: var(--variable-collection-WHITE);
+  font-family: "Pretendard Variable-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: normal;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.rbc-day-bg,
+.rbc-row-bg,
+.rbc-month-row,
+.rbc-header,
+.rbc-row.rbc-month-header,
+.rbc-month-view {
+  border: none !important; /* 테두리 제거 */
+}
+
+.rbc-day-bg,
+.rbc-row-bg,
+.rbc-day,
+.rbc-date-cell,
+.rbc-month-row,
+.rbc-day-slot {
+  border: none !important; /* 내부 테두리 제거 */
+}
+
+.rbc-header {
+  border: none !important; /* 요일 부분 테두리 제거 */
+}
+
+.Calendar-daysText {
+  font-size: 21px;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  font-weight: 400;
+}
+
+.blueText {
+  color: var(--variable-collection-blue);
+}
+
+/* 날짜 셀 스타일 */
+.rbc-date-cell {
+  display: flex;
+  justify-content: center; /* 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  height: 80px; /* 셀 높이 조정 */
+  margin-left: 5px;
+}
+
+.rbc-button-link {
+  cursor: default;
+  color: var(--variable-collection-main-black);
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: normal;
+}
+/* 일요일과 토요일 색상 변경 */
+.rbc-date-cell:nth-child(1) .rbc-button-link,  
+.rbc-date-cell:nth-child(7) .rbc-button-link { 
+  color: var(--variable-collection-blue) !important;
+}
+/* 오늘 날짜 스타일 */
+.rbc-date-cell.rbc-now .rbc-button-link {
+  background-color: var(--variable-collection-main-black) !important;
+  color: var(--variable-collection-WHITE) !important;
+  border-radius: 7.64px;
+  width: 45.81px; 
+  height: 45.81px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+/* 현재 달이 아닌 날짜를 회색으로 설정 */
+.rbc-date-cell.rbc-off-range .rbc-button-link {
+  color: var(--variable-collection-gray-2) !important;
+}
+
+.rbc-day-bg {
+  background: none; /* 배경 제거 */
+  box-shadow: none; /* 그림자 제거 */
+}
+
+/* 선택된 일정 파란색 배경 그대로 적용*/
+.rbc-selected {
+  background-color: #3174ad !important;
+}
+
+/* 여기서부터 모달창 CSS */
+.Schedule-frame-78 {
+  background-color: var(--variable-collection-main-black);
+  height: 1080px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 1920px;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.Schedule-frame-79 {
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  left: 35%;
+  padding: 32px 24px 24px;
+  position: fixed;
+  top: 333px;
+  width: 30%;
+}
+
+.Schedule-frame-80 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  position: relative;
+}
+
+.Schedule-text-wrapper-60 {
+  color: var(--variable-collection-main-black);
+  font-family: "Pretendard Variable-SemiBold", Helvetica;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.72px;
+  line-height: normal;
+  margin-top: -1px;
+  position: relative;
+  width: fit-content;
+  margin: auto;
+}
+
+.Schedule-dateAndSchedule {
+  text-align: center;
+  gap: 10px;
+}
+.Schedule-text-frame {
+  padding-bottom: 10px;
+}
+
+.Schedule-text-wrapper-61 {
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+  line-height: 24px;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  color: var(--variable-collection-gray-1);
+  padding: 10px;
+  border-radius: 12.5px;
+  border: 1.04px solid;
+  border-color: var(--variable-collection-gray-3);
+  height: 58.35px;
+  position: relative;
+  text-align: center;
+  width: 85%;
+}
+
+.Schedule-text-field {
+  font-size: 22px;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  padding: 10px;
+  align-self: stretch;
+  border: 1.04px solid;
+  border-color: var(--variable-collection-gray-3);
+  border-radius: 12.5px;
+  height: 58.35px;
+  position: relative;
+  width: 85%;
+}
+
+.Schedule-frame-81 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  position: relative;
+}
+
+.Schedule-frame-82 {
+  cursor: pointer;
+  align-items: center;
+  background-color: var(--variable-collection-gray-3);
+  border-radius: 8px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px 75px;
+  position: relative;
+}
+
+.Schedule-text-wrapper-62 {
+  color: var(--variable-collection-main-black);
+  font-family: "Pretendard Variable-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: normal;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.Schedule-frame-83 {
+  cursor: pointer;
+  align-items: center;
+  background-color: var(--variable-collection-main-black);
+  border-radius: 8px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px 75px;
+  position: relative;
+}
+
+.Schedule-text-wrapper-63 {
+  color: #ffffff;
+  font-family: "Pretendard Variable-SemiBold", Helvetica;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  line-height: normal;
+  margin-top: -1px;
+  position: relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.Schedule-text-wrapper-64 {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+  line-height: 24px;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  color: var(--variable-collection-gray-1);
+  padding: 10px;
+  height: 45px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.Schedule-text-wrapper-65 {
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+  line-height: 24px;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  color: var(--variable-collection-gray-1);
+  padding: 10px;
+  height: 45px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.Schedule-frame-84 {
+  cursor: pointer;
+  align-items: center;
+  background-color: var(--variable-collection-gray-3);
+  border-radius: 8px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px 60px;
+  position: relative;
+}
+
+.Schedule-frame-85 {
+  cursor: pointer;
+  align-items: center;
+  background-color: var(--variable-collection-main-black);
+  border-radius: 8px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px 60px;
+  position: relative;
+}
+
+.Schedule-frame-86 {
+  cursor: pointer;
+  align-items: center;
+  background-color: #cd5757;
+  border-radius: 8px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-content: center;
+  padding: 12px 60px;
+  position: relative;
+}

@@ -1,0 +1,163 @@
+.CommunityPost {
+  background-color: var(--variable-collection-gray4);
+  height: 2629px;
+  position: relative;
+  width: 1920px;
+}
+
+.CommunityPost-overlap-group {
+  height: 1800px;
+  left: 312px;
+  position: absolute;
+  top: 176px;
+  width: 1296px;
+}
+
+.CommunityPost-frame {
+  align-items: flex-end;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 1800px;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+.CommunityPost-frame-wrapper {
+  align-items: flex-end;
+  background-color: #ffffff;
+  border: 1px solid;
+  border-color: var(--variable-collection-gray-3);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 10px;
+  overflow: hidden;
+  padding: 48px 60px 60px;
+  position: relative;
+}
+
+.CommunityPost-div {
+  align-items: flex-start;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+}
+
+.CommunityPost-line {
+  height: 1px;
+  object-fit: cover;
+  position: relative;
+  width: 1172px;
+}
+
+.CommunityPost-frame-7 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 12px;
+  position: relative;
+}
+
+.CommunityPost-frame-8 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 8px;
+  position: relative;
+}
+
+.CommunityPost-frame-9 {
+  align-items: center;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  position: relative;
+}
+
+.CommunityPost-text-wrapper-5 {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: var(--variable-collection-gray-1);
+  display: -webkit-box;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.6px;
+  line-height: normal;
+  margin-top: -1px;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.CommunityPost-text-wrapper-6 {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  color: var(--variable-collection-gray-1);
+  display: -webkit-box;
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+  line-height: normal;
+  overflow: hidden;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.CommunityPost-like {
+  cursor: pointer;
+  height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+.CommunityPost-like.liked {
+  filter: invert(29%) sepia(96%) saturate(7481%) hue-rotate(357deg) brightness(102%) contrast(107%);
+}
+
+.CommunityPost-comment {
+  height: 24px;
+  position: relative;
+  width: 24px;
+}
+
+.CommunityPost-frame-19 {
+  cursor: pointer;
+  background-color: #ffffff;
+  border: 1px solid;
+  border-color: var(--variable-collection-button-navy);
+  border-radius: 4px;
+  height: 40px;
+  width: 114px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: center;
+  margin-top: 30px;
+}
+
+.CommunityPost-format-list-bulleted {
+  height: 20px;
+  width: 20px;
+}
+
+.CommunityPost-text-wrapper-13 {
+  color: var(--variable-collection-button-navy);
+  font-family: "Pretendard Variable-Regular", Helvetica;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.48px;
+  line-height: 24px;
+  white-space: nowrap;
+}
