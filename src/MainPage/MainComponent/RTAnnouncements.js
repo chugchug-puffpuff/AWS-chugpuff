@@ -12,11 +12,7 @@ const RTAnnouncements = ({ authenticate }) => {
   // 공고 별 스크랩 수 불러오기
   const fetchScrapCount = async (jobId) => {
     try {
-      const response = await axios.get(`http://13.124.149.28:8080/api/job-postings/${jobId}/scrap-count`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await axios.get(`http://13.124.149.28:8080/api/job-postings/${jobId}/scrap-count`);
       return response.data || 0;
     } catch (error) {
       console.error('Error fetching scrap count:', error);
