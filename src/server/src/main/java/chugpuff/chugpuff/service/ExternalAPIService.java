@@ -330,7 +330,10 @@ public class ExternalAPIService {
     public String callTTS(String text) {
         // PollyClient의 Null 검사 추가
         if (this.pollyClient == null) {
-            throw new RuntimeException("PollyClient is not initialized");
+            init(); // PollyClient가 초기화되지 않은 경우 재초기화 시도
+            if (this.pollyClient == null) {
+                throw new RuntimeException("PollyClient is not initialized");
+            }
         }
 
         // TTS 요청 생성
