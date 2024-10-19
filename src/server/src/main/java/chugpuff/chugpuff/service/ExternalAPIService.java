@@ -328,17 +328,22 @@ public class ExternalAPIService {
 
     // TTS API 호출 메서드
     public String callTTS(String text) {
-        if (pollyClient == null) {
-            throw new IllegalStateException("PollyClient is not initialized.");
+        // PollyClient의 Null 검사 추가
+        if (this.pollyClient == null) {
+            throw new RuntimeException("PollyClient is not initialized");
         }
+
+        // TTS 요청 생성
         SynthesizeSpeechRequest synthesizeSpeechRequest = SynthesizeSpeechRequest.builder()
                 .text(text)
                 .outputFormat(OutputFormat.MP3) // MP3 형식으로 설정
                 .voiceId("Seoyeon") // "Seoyeon"을 사용하여 한국어 음성을 생성
                 .build();
+
+        // TTS 요청 처리 및 파일 저장
         try (ResponseInputStream<SynthesizeSpeechResponse> synthesizeSpeechResponse = pollyClient.synthesizeSpeech(synthesizeSpeechRequest)) {
             InputStream audioStream = synthesizeSpeechResponse;
-            String audioFilePath = "output.mp3"; // 확장자를 .mp3로 설정
+            String audioFilePath = "output.mp3"; // 파일 경로 설정
             File audioFile = new File(audioFilePath);
             try (FileOutputStream outputStream = new FileOutputStream(audioFile)) {
                 byte[] buffer = new byte[1024];
@@ -352,5 +357,4 @@ public class ExternalAPIService {
             throw new RuntimeException("Failed to save audio stream to file", e);
         }
     }
-
 }
