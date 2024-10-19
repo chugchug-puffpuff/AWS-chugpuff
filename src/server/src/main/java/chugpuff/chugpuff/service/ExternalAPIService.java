@@ -98,11 +98,17 @@ public class ExternalAPIService {
 
     @PostConstruct
     public void init() {
-        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(awsAccessKey, awsSecretKey);
-        this.pollyClient = PollyClient.builder()
-                .region(Region.AP_NORTHEAST_2)
-                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                .build();
+        try {
+            AwsBasicCredentials awsCreds = AwsBasicCredentials.create(awsAccessKey, awsSecretKey);
+            this.pollyClient = PollyClient.builder()
+                    .region(Region.AP_NORTHEAST_2)
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                    .build();
+            System.out.println("PollyClient initialized successfully.");
+        } catch (Exception e) {
+            System.err.println("Failed to initialize PollyClient: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // ChatGPT API 호출 메서드
@@ -322,6 +328,9 @@ public class ExternalAPIService {
 
     // TTS API 호출 메서드
     public String callTTS(String text) {
+        if (pollyClient == null) {
+            throw new IllegalStateException("PollyClient is not initialized.");
+        }
         SynthesizeSpeechRequest synthesizeSpeechRequest = SynthesizeSpeechRequest.builder()
                 .text(text)
                 .outputFormat(OutputFormat.MP3) // MP3 형식으로 설정
