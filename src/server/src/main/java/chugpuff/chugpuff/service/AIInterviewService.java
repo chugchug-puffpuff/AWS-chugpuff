@@ -213,7 +213,7 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioFilePath = "captured_audio.wav";
+            String audioFilePath = "/home/ubuntu/AWS-chugpuff/captured_audio.wav";
             File audioFile = new File(audioFilePath);
 
             // 파일이 존재하는지 확인하고 강제로 삭제하는 로직
