@@ -213,10 +213,10 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioFilePath = "/absolute/path/to/captured_audio.wav";  // 절대 경로 사용
+            String audioFilePath = "captured_audio.wav";
             File audioFile = new File(audioFilePath);
 
-            // 파일이 존재하면 강제로 삭제
+            // 파일이 존재하는지 확인하고 강제로 삭제하는 로직
             if (audioFile.exists()) {
                 System.out.println("Existing file found, deleting: " + audioFilePath);
                 if (!audioFile.delete()) {
@@ -237,8 +237,10 @@ public class AIInterviewService {
 
                 AudioInputStream audioStream = new AudioInputStream(microphone);
 
-                // 파일 쓰기 시도 전 로그 추가
-                System.out.println("Attempting to write audio file...");
+                // 파일 생성 전 경로 출력
+                System.out.println("Attempting to write audio file to: " + audioFile.getAbsolutePath());
+
+                // 오디오 파일 작성 시도
                 AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);
 
                 System.out.println("Audio data written to file: " + audioFilePath);
@@ -247,7 +249,7 @@ public class AIInterviewService {
                 System.err.println("Failed to open microphone: " + e.getMessage());
                 stopAudioCapture();
             } catch (IOException e) {
-                System.err.println("Failed to write audio to file: " + e.getMessage());  // 파일 쓰기 오류 출력
+                System.err.println("Failed to write audio to file: " + e.getMessage());
                 stopAudioCapture();
             }
         }).start();
