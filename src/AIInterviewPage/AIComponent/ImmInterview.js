@@ -73,7 +73,7 @@ const ImmInterview = ({ selectedType, selectedFeedback }) => {
         setCurrentQuestion(question);
         setTtsAudioUrl(ttsAudioUrl);
         // const audioInstance = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`); // ttsAudioUrl을 사용하여 오디오 인스턴스 생성
-        const audioInstance = new Audio(`/home/ubuntu/AWS-chugpuff/src/server/build/libs/output.mp3?timestamp=${new Date().getTime()}`);
+        const audioInstance = new Audio(`/static/output.mp3?timestamp=${new Date().getTime()}`);
         const playAudio = async () => {
           try {
             await audioInstance.play();
@@ -115,7 +115,7 @@ const ImmInterview = ({ selectedType, selectedFeedback }) => {
       setCurrentQuestion(question);
       setTtsAudioUrl(ttsAudioUrl);
       //const audio = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`);
-      const audio = new Audio(`/home/ubuntu/AWS-chugpuff/src/server/build/libs/output.mp3?timestamp=${new Date().getTime()}`);
+      const audio = new Audio(`/static/output.mp3?timestamp=${new Date().getTime()}`);
       audio.play();
       setTimeout(() => {
         setIsQuestionTypingComplete(true);
@@ -165,7 +165,7 @@ const ImmInterview = ({ selectedType, selectedFeedback }) => {
   const convertAnswer = async () => {
     console.log('변환요청');
     // const filePath = '/captured_audio.wav';
-    const filePath = '/home/ubuntu/AWS-chugpuff/src/server/build/libs/captured_audio.wav';
+    const filePath = '/static/captured_audio.wav';
     const response = await fetch(filePath);
     const blob = await response.blob();
     const formData = new FormData();
@@ -208,7 +208,7 @@ const ImmInterview = ({ selectedType, selectedFeedback }) => {
       setTtsAudioUrl(ttsAudioUrl);
       setStorageFeedback(prev => [...prev, feedback]);
       // const audio = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`);
-      const audio = new Audio(`/home/ubuntu/AWS-chugpuff/src/server/build/libs/output.mp3?timestamp=${new Date().getTime()}`);
+      const audio = new Audio(`/static/output.mp3?timestamp=${new Date().getTime()}`);
       audio.play();
       setStorageQuestion(prev => [...prev, currentQuestion]);
       setTimeout(() => {
