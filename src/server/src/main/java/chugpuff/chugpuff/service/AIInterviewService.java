@@ -216,6 +216,10 @@ public class AIInterviewService {
             String audioFilePath = "captured_audio.wav";
             File audioFile = new File(audioFilePath);
 
+            if (audioFile.exists()) {
+                audioFile.delete();
+            }
+
             try {
                 AudioFormat format = new AudioFormat(44100, 16, 1, true, true);
                 DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
