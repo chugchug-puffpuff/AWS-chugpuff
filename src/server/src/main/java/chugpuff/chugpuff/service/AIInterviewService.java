@@ -213,7 +213,7 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioFilePath = "/home/ubuntu/AWS-chugpuff/captured_audio.wav";
+            String audioFilePath = "captured_audio.wav";
             File audioFile = new File(audioFilePath);
 
             // 파일이 존재하는지 확인하고 강제로 삭제하는 로직
@@ -236,20 +236,11 @@ public class AIInterviewService {
                 System.out.println("Microphone opened and audio capture started...");
 
                 AudioInputStream audioStream = new AudioInputStream(microphone);
-
-                // 파일 생성 전 경로 출력
-                System.out.println("Attempting to write audio file to: " + audioFile.getAbsolutePath());
-
-                // 오디오 파일 작성 시도
                 AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);
-
                 System.out.println("Audio data written to file: " + audioFilePath);
 
-            } catch (LineUnavailableException e) {
-                System.err.println("Failed to open microphone: " + e.getMessage());
-                stopAudioCapture();
-            } catch (IOException e) {
-                System.err.println("Failed to write audio to file: " + e.getMessage());
+            } catch (LineUnavailableException | IOException e) {
+                System.err.println("Failed to capture audio: " + e.getMessage());
                 stopAudioCapture();
             }
         }).start();
