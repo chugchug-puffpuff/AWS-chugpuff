@@ -213,11 +213,16 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioFilePath = "captured_audio.wav";
+            String audioFilePath = "captured_audio.wav";  // 고정된 파일 이름
             File audioFile = new File(audioFilePath);
 
+            // 파일이 존재하면 강제로 삭제
             if (audioFile.exists()) {
-                audioFile.delete();
+                System.out.println("Existing file found, deleting: " + audioFilePath);
+                if (!audioFile.delete()) {
+                    System.err.println("Failed to delete existing file: " + audioFilePath);
+                    return;
+                }
             }
 
             try {
