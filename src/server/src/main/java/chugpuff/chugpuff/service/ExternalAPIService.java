@@ -357,6 +357,7 @@ public class ExternalAPIService {
                 }
             }
 
+            // 파일 쓰기
             File audioFile = new File(audioFilePath);
             try (FileOutputStream outputStream = new FileOutputStream(audioFile)) {
                 byte[] buffer = new byte[1024];
