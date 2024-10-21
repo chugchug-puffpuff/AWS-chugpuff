@@ -346,7 +346,17 @@ public class ExternalAPIService {
         // TTS 요청 처리 및 파일 저장
         try (ResponseInputStream<SynthesizeSpeechResponse> synthesizeSpeechResponse = pollyClient.synthesizeSpeech(synthesizeSpeechRequest)) {
             InputStream audioStream = synthesizeSpeechResponse;
-            String audioFilePath = "resources/output.mp3"; // 파일 경로 수정
+            String audioDirectoryPath = "resources"; // 디렉토리 경로
+            String audioFilePath = audioDirectoryPath + "/output.mp3"; // 파일 경로
+
+            // 디렉토리 확인 및 생성
+            File audioDirectory = new File(audioDirectoryPath);
+            if (!audioDirectory.exists()) {
+                if (!audioDirectory.mkdirs()) {
+                    throw new RuntimeException("Failed to create directory: " + audioDirectoryPath);
+                }
+            }
+
             File audioFile = new File(audioFilePath);
             try (FileOutputStream outputStream = new FileOutputStream(audioFile)) {
                 byte[] buffer = new byte[1024];
