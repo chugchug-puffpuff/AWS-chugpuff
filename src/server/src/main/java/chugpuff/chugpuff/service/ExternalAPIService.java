@@ -347,8 +347,8 @@ public class ExternalAPIService {
         try (ResponseInputStream<SynthesizeSpeechResponse> synthesizeSpeechResponse = pollyClient.synthesizeSpeech(synthesizeSpeechRequest)) {
             InputStream audioStream = synthesizeSpeechResponse;
 
-            // 절대 경로로 변경하여 파일 저장 경로 문제 해결
-            String audioDirectoryPath = System.getProperty("user.dir") + "/resources"; // 프로젝트 디렉토리 내의 resources 폴더 사용
+            // 파일 경로를 원하는 디렉토리로 변경
+            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 원하는 디렉토리 경로
             String audioFilePath = audioDirectoryPath + "/output.mp3"; // 파일 경로
 
             // 디렉토리 확인 및 생성
