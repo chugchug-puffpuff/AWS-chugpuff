@@ -7,13 +7,23 @@ module.exports = function(app) {
   app.use('/static', express.static(path.join(__dirname, '../')));
 
   // output.mp3 프록시 설정
+  // app.use(
+  //   '/output.mp3',
+  //   createProxyMiddleware({
+  //     target: 'http://13.124.149.28:3000/static',
+  //     changeOrigin: true,
+  //     pathRewrite: {
+  //       '^/output.mp3': '/output.mp3',
+  //     },
+  //   })
+  // );
   app.use(
-    '/output.mp3',
+    '/resources/output.mp3',
     createProxyMiddleware({
-      target: 'http://13.124.149.28:3000/static',
+      target: 'http://localhost:3000/static',
       changeOrigin: true,
       pathRewrite: {
-        '^/output.mp3': '/output.mp3',
+        '^/resources/output.mp3': '/output.mp3',
       },
     })
   );
