@@ -213,7 +213,18 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioFilePath = "resources/captured_audio.wav"; // 저장 경로 수정
+            String audioDirectoryPath = "resources"; // 디렉토리 경로
+            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 파일 경로
+
+            // 디렉토리 확인 및 생성
+            File audioDirectory = new File(audioDirectoryPath);
+            if (!audioDirectory.exists()) {
+                if (!audioDirectory.mkdirs()) {
+                    System.err.println("Failed to create directory: " + audioDirectoryPath);
+                    return;
+                }
+            }
+
             File audioFile = new File(audioFilePath);
 
             // 파일이 존재하는지 확인하고 강제로 삭제하는 로직
@@ -451,7 +462,7 @@ public class AIInterviewService {
     public Map<String, String> completeAnswerRecordingWithAudioUrl(Long AIInterviewNo) {
         stopAudioCapture();
 
-        String audioFilePath = "resources/captured_audio.wav"; // 저장 경로 수정
+        String audioFilePath = "resources/captured_audio.wav"; // 경로 변경
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "녹음 완료");
