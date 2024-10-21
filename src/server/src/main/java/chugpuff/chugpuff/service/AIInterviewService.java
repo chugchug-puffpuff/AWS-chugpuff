@@ -270,9 +270,15 @@ public class AIInterviewService {
 
         String audioFilePath = "/home/ubuntu/AWS-chugpuff/resources/captured_audio.wav"; // 절대 경로로 수정
 
+        // 파일 존재 여부 확인
+        File audioFile = new File(audioFilePath);
+        if (!audioFile.exists()) {
+            System.err.println("Audio file not found: " + audioFilePath);
+        }
+
         Map<String, String> response = new HashMap<>();
         response.put("message", "녹음 완료");
-        response.put("captured_audio_url", audioFilePath);
+        response.put("captured_audio_url", audioFilePath); // 실제 경로 반환
 
         return response;
     }
