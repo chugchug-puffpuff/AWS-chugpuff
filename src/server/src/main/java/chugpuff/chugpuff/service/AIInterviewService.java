@@ -213,7 +213,7 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioFilePath = "captured_audio.wav";
+            String audioFilePath = "resources/captured_audio.wav"; // 저장 경로 수정
             File audioFile = new File(audioFilePath);
 
             // 파일이 존재하는지 확인하고 강제로 삭제하는 로직
@@ -451,7 +451,7 @@ public class AIInterviewService {
     public Map<String, String> completeAnswerRecordingWithAudioUrl(Long AIInterviewNo) {
         stopAudioCapture();
 
-        String audioFilePath = "captured_audio.wav";
+        String audioFilePath = "resources/captured_audio.wav"; // 저장 경로 수정
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "녹음 완료");
