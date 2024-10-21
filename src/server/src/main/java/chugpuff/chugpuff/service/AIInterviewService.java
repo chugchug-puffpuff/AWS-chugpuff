@@ -535,14 +535,24 @@ public class AIInterviewService {
 
     // STT 변환 및 응답 저장 메서드
     public Map<String, String> convertAnswerToText(AIInterview aiInterview, String audioFilePath) {
+        // 파일 객체 생성
+        File audioFile = new File(audioFilePath);
+
+        // 파일이 존재하고 크기가 0보다 큰지 확인
+        if (!audioFile.exists() || audioFile.length() == 0) {
+            throw new RuntimeException("Audio file does not exist or is empty: " + audioFilePath);
+        }
+
+        // STT API 호출
         String sttText = externalAPIService.callSTT(audioFilePath);
 
         System.out.println("STT Result: " + sttText);
 
+        // 사용자 응답 저장
         saveUserResponse(aiInterview, currentQuestion, sttText);
-
         userResponses.put(aiInterview.getAIInterviewNo(), sttText);
 
+        // 응답 맵 생성
         Map<String, String> response = new HashMap<>();
         response.put("answer", sttText);
         return response;
