@@ -213,8 +213,9 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로
-            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 고정된 파일 이름
+            // 절대 경로로 저장할 디렉토리와 파일 경로 지정
+            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로로 수정
+            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 고정된 파일 이름 사용
 
             // 디렉토리 확인 및 생성
             File audioDirectory = new File(audioDirectoryPath);
@@ -222,8 +223,6 @@ public class AIInterviewService {
                 if (!audioDirectory.mkdirs()) {
                     System.err.println("Failed to create directory: " + audioDirectoryPath);
                     return;
-                } else {
-                    System.out.println("Directory created: " + audioDirectoryPath);
                 }
             }
 
