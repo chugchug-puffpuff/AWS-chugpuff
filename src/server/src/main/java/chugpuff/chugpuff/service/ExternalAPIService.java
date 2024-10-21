@@ -328,7 +328,7 @@ public class ExternalAPIService {
 
     // TTS API 호출 메서드
     public String callTTS(String text) {
-        // PollyClient의 Null 검사 추가
+        // PollyClient의 Null 검사 및 초기화
         if (this.pollyClient == null) {
             init(); // PollyClient가 초기화되지 않은 경우 재초기화 시도
             if (this.pollyClient == null) {
@@ -346,7 +346,9 @@ public class ExternalAPIService {
         // TTS 요청 처리 및 파일 저장
         try (ResponseInputStream<SynthesizeSpeechResponse> synthesizeSpeechResponse = pollyClient.synthesizeSpeech(synthesizeSpeechRequest)) {
             InputStream audioStream = synthesizeSpeechResponse;
-            String audioDirectoryPath = "resources"; // 디렉토리 경로
+
+            // 절대 경로로 변경하여 파일 저장 경로 문제 해결
+            String audioDirectoryPath = System.getProperty("user.dir") + "/resources"; // 프로젝트 디렉토리 내의 resources 폴더 사용
             String audioFilePath = audioDirectoryPath + "/output.mp3"; // 파일 경로
 
             // 디렉토리 확인 및 생성
@@ -366,6 +368,7 @@ public class ExternalAPIService {
                     outputStream.write(buffer, 0, bytesRead);
                 }
             }
+
             return audioFilePath;
         } catch (Exception e) {
             throw new RuntimeException("Failed to save audio stream to file", e);
