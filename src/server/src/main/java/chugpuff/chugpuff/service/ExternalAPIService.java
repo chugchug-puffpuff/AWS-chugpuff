@@ -346,7 +346,7 @@ public class ExternalAPIService {
         // TTS 요청 처리 및 파일 저장
         try (ResponseInputStream<SynthesizeSpeechResponse> synthesizeSpeechResponse = pollyClient.synthesizeSpeech(synthesizeSpeechRequest)) {
             InputStream audioStream = synthesizeSpeechResponse;
-            String audioFilePath = "output.mp3"; // 파일 경로 설정
+            String audioFilePath = "resources/output.mp3"; // 파일 경로 수정
             File audioFile = new File(audioFilePath);
             try (FileOutputStream outputStream = new FileOutputStream(audioFile)) {
                 byte[] buffer = new byte[1024];
