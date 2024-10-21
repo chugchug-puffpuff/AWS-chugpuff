@@ -206,7 +206,7 @@ public class AIInterviewService {
         }
     }
 
-    // 사용자 음성 응답 캡처 매서드
+    // 사용자 음성 응답 캡처 메서드
     public void captureUserAudio() {
         if (!interviewInProgress) {
             return;
@@ -255,6 +255,34 @@ public class AIInterviewService {
                 stopAudioCapture();
             }
         }).start();
+    }
+
+    // 녹음 파일 반환 메서드
+    public Map<String, String> completeAnswerRecordingWithAudioUrl(Long AIInterviewNo) {
+        stopAudioCapture();
+
+        String audioFilePath = "resources/captured_audio.wav"; // 경로 변경
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "녹음 완료");
+        response.put("captured_audio_url", audioFilePath);
+
+        return response;
+    }
+
+    // STT 변환 및 응답 저장 메서드
+    public Map<String, String> convertAnswerToText(AIInterview aiInterview, String audioFilePath) {
+        String sttText = externalAPIService.callSTT(audioFilePath);
+
+        System.out.println("STT Result: " + sttText);
+
+        saveUserResponse(aiInterview, currentQuestion, sttText);
+
+        userResponses.put(aiInterview.getAIInterviewNo(), sttText);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("answer", sttText);
+        return response;
     }
 
     // 즉시 피드백 생성 및 저장 메서드
@@ -458,19 +486,6 @@ public class AIInterviewService {
         }
     }
 
-    // 녹음 파일 반환 메서드
-    public Map<String, String> completeAnswerRecordingWithAudioUrl(Long AIInterviewNo) {
-        stopAudioCapture();
-
-        String audioFilePath = "resources/captured_audio.wav"; // 경로 변경
-
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "녹음 완료");
-        response.put("captured_audio_url", audioFilePath);
-
-        return response;
-    }
-
     // 전체 피드백 생성 및 저장 메서드
     public Map<String, String> generateFullFeedback(AIInterview aiInterview) {
         List<AIInterviewFF> responses = aiInterviewFFRepository.findByAiInterview(aiInterview);
@@ -532,31 +547,6 @@ public class AIInterviewService {
     }
 
     public Map<Long, String> userResponses = new HashMap<>();
-
-    // STT 변환 및 응답 저장 메서드
-    public Map<String, String> convertAnswerToText(AIInterview aiInterview, String audioFilePath) {
-        // 파일 객체 생성
-        File audioFile = new File(audioFilePath);
-
-        // 파일이 존재하고 크기가 0보다 큰지 확인
-        if (!audioFile.exists() || audioFile.length() == 0) {
-            throw new RuntimeException("Audio file does not exist or is empty: " + audioFilePath);
-        }
-
-        // STT API 호출
-        String sttText = externalAPIService.callSTT(audioFilePath);
-
-        System.out.println("STT Result: " + sttText);
-
-        // 사용자 응답 저장
-        saveUserResponse(aiInterview, currentQuestion, sttText);
-        userResponses.put(aiInterview.getAIInterviewNo(), sttText);
-
-        // 응답 맵 생성
-        Map<String, String> response = new HashMap<>();
-        response.put("answer", sttText);
-        return response;
-    }
 
     // 전체 패드백 응답 저장 메서드
     public void saveUserResponse(AIInterview aiInterview, String question, String response) {
