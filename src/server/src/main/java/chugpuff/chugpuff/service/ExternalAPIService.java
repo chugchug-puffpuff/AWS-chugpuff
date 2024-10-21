@@ -347,16 +347,19 @@ public class ExternalAPIService {
         try (ResponseInputStream<SynthesizeSpeechResponse> synthesizeSpeechResponse = pollyClient.synthesizeSpeech(synthesizeSpeechRequest)) {
             InputStream audioStream = synthesizeSpeechResponse;
 
-            // 파일 경로를 원하는 디렉토리로 변경
+            // 파일 경로를 원하는 디렉토리로 설정
             String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 원하는 디렉토리 경로
             String audioFilePath = audioDirectoryPath + "/output.mp3"; // 파일 경로
 
             // 디렉토리 확인 및 생성
             File audioDirectory = new File(audioDirectoryPath);
             if (!audioDirectory.exists()) {
+                System.out.println("Directory does not exist, creating: " + audioDirectoryPath);
                 if (!audioDirectory.mkdirs()) {
                     throw new RuntimeException("Failed to create directory: " + audioDirectoryPath);
                 }
+            } else {
+                System.out.println("Directory exists: " + audioDirectoryPath);
             }
 
             // 파일 쓰기
@@ -369,8 +372,10 @@ public class ExternalAPIService {
                 }
             }
 
+            System.out.println("Audio file created at: " + audioFilePath);
             return audioFilePath;
         } catch (Exception e) {
+            e.printStackTrace();  // 예외 내용을 출력하여 문제 확인
             throw new RuntimeException("Failed to save audio stream to file", e);
         }
     }
