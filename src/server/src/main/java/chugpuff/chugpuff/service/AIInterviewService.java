@@ -213,9 +213,8 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            // 절대 경로로 저장할 디렉토리와 파일 경로 지정
-            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로로 수정
-            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 고정된 파일 이름 사용
+            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로
+            String audioFilePath = audioDirectoryPath + "/captured_audio.wav";
 
             // 디렉토리 확인 및 생성
             File audioDirectory = new File(audioDirectoryPath);
@@ -241,24 +240,25 @@ public class AIInterviewService {
                 AudioFormat format = new AudioFormat(44100, 16, 1, true, true);
                 DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
+                System.out.println("Opening microphone...");
                 microphone = (TargetDataLine) AudioSystem.getLine(info);
-                microphone.open(format);
+                microphone.open(format);  // 마이크를 열기 시도
                 microphone.start();
 
                 System.out.println("Microphone opened and audio capture started...");
 
                 // 오디오 파일을 저장하는 로직
                 AudioInputStream audioStream = new AudioInputStream(microphone);
-                AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);
+                AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);  // 파일 작성 시도
                 System.out.println("Audio data written to file: " + audioFilePath);
 
             } catch (LineUnavailableException e) {
                 System.err.println("LineUnavailableException: " + e.getMessage());
-                e.printStackTrace(); // 예외의 스택 트레이스 출력
+                e.printStackTrace();  // 마이크 장치가 열리지 않을 때 로그 출력
                 stopAudioCapture();
             } catch (IOException e) {
                 System.err.println("IOException: " + e.getMessage());
-                e.printStackTrace(); // 예외의 스택 트레이스 출력
+                e.printStackTrace();  // 파일 저장 과정에서 문제가 있을 때 로그 출력
                 stopAudioCapture();
             }
         }).start();
