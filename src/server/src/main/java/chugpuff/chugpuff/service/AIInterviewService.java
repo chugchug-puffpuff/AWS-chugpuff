@@ -213,8 +213,9 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioDirectoryPath = "resources"; // 디렉토리 경로
-            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 파일 경로
+            // 절대 경로로 저장할 디렉토리와 파일 경로 지정
+            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로로 수정
+            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 고정된 파일 이름 사용
 
             // 디렉토리 확인 및 생성
             File audioDirectory = new File(audioDirectoryPath);
@@ -227,7 +228,7 @@ public class AIInterviewService {
 
             File audioFile = new File(audioFilePath);
 
-            // 파일이 존재하는지 확인하고 강제로 삭제하는 로직
+            // 파일이 존재하면 삭제하고 덮어쓰기 준비
             if (audioFile.exists()) {
                 System.out.println("Existing file found, deleting: " + audioFilePath);
                 if (!audioFile.delete()) {
@@ -261,7 +262,7 @@ public class AIInterviewService {
     public Map<String, String> completeAnswerRecordingWithAudioUrl(Long AIInterviewNo) {
         stopAudioCapture();
 
-        String audioFilePath = "resources/captured_audio.wav"; // 경로 변경
+        String audioFilePath = "/home/ubuntu/AWS-chugpuff/resources/captured_audio.wav"; // 절대 경로로 수정
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "녹음 완료");
