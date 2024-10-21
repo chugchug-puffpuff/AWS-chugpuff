@@ -213,9 +213,8 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            // 절대 경로로 저장할 디렉토리와 파일 경로 지정
-            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로로 수정
-            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 고정된 파일 이름 사용
+            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로
+            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 고정된 파일 이름
 
             // 디렉토리 확인 및 생성
             File audioDirectory = new File(audioDirectoryPath);
@@ -223,6 +222,8 @@ public class AIInterviewService {
                 if (!audioDirectory.mkdirs()) {
                     System.err.println("Failed to create directory: " + audioDirectoryPath);
                     return;
+                } else {
+                    System.out.println("Directory created: " + audioDirectoryPath);
                 }
             }
 
@@ -247,12 +248,18 @@ public class AIInterviewService {
 
                 System.out.println("Microphone opened and audio capture started...");
 
+                // 오디오 파일을 저장하는 로직
                 AudioInputStream audioStream = new AudioInputStream(microphone);
                 AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);
                 System.out.println("Audio data written to file: " + audioFilePath);
 
-            } catch (LineUnavailableException | IOException e) {
-                System.err.println("Failed to capture audio: " + e.getMessage());
+            } catch (LineUnavailableException e) {
+                System.err.println("LineUnavailableException: " + e.getMessage());
+                e.printStackTrace(); // 예외의 스택 트레이스 출력
+                stopAudioCapture();
+            } catch (IOException e) {
+                System.err.println("IOException: " + e.getMessage());
+                e.printStackTrace(); // 예외의 스택 트레이스 출력
                 stopAudioCapture();
             }
         }).start();
