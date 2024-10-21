@@ -23,7 +23,7 @@ module.exports = function(app) {
       target: 'http://localhost:3000/static',
       changeOrigin: true,
       pathRewrite: {
-        '^/resources/output.mp3': '/output.mp3',
+        '^/resources/output.mp3': '/resources/output.mp3',
       },
     })
   );
