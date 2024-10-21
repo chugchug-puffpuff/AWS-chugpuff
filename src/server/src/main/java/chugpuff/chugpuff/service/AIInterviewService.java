@@ -213,53 +213,36 @@ public class AIInterviewService {
         }
 
         new Thread(() -> {
-            String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로
-            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 파일명 고정
+            String audioFilePath = "/home/ubuntu/AWS-chugpuff/resources/captured_audio.wav"; // 파일명 고정
 
             // 디렉토리 확인 및 생성
-            File audioDirectory = new File(audioDirectoryPath);
+            File audioDirectory = new File("/home/ubuntu/AWS-chugpuff/resources");
             if (!audioDirectory.exists()) {
                 if (!audioDirectory.mkdirs()) {
-                    System.err.println("디렉토리 생성 실패: " + audioDirectoryPath);
+                    System.err.println("디렉토리 생성 실패: " + audioDirectory.getPath());
                     return;
                 }
             }
 
-            File audioFile = new File(audioFilePath);
-
-            // 파일이 존재하면 삭제 후 덮어쓰기 준비
-            if (audioFile.exists()) {
-                System.out.println("기존 파일 발견, 삭제 중: " + audioFilePath);
-                if (!audioFile.delete()) {
-                    System.err.println("기존 파일 삭제 실패: " + audioFilePath);
-                    return;
-                }
-            }
+            // FFmpeg 명령어
+            String[] command = {
+                    "ffmpeg",
+                    "-f", "alsa", // 입력 포맷
+                    "-i", "default", // 입력 장치
+                    "-t", "10", // 10초 동안 녹음
+                    audioFilePath
+            };
 
             try {
-                AudioFormat format = new AudioFormat(44100, 16, 1, true, true);
-                DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+                ProcessBuilder processBuilder = new ProcessBuilder(command);
+                processBuilder.inheritIO(); // 입출력을 현재 프로세스와 공유
+                Process process = processBuilder.start();
 
-                System.out.println("마이크 열기 시도 중...");
-                microphone = (TargetDataLine) AudioSystem.getLine(info);
-                microphone.open(format);  // 마이크 열기
-                microphone.start();
-
-                System.out.println("마이크가 열렸고, 오디오 캡처 시작...");
-
-                // 오디오 파일을 저장하는 로직
-                AudioInputStream audioStream = new AudioInputStream(microphone);
-                AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);  // 파일 작성
-                System.out.println("오디오 데이터가 파일에 저장됨: " + audioFilePath);
-
-            } catch (LineUnavailableException e) {
-                System.err.println("LineUnavailableException: " + e.getMessage());
-                e.printStackTrace();  // 마이크 장치 열기 실패 시 로그 출력
-                stopAudioCapture();
-            } catch (IOException e) {
-                System.err.println("IOException: " + e.getMessage());
-                e.printStackTrace();  // 파일 저장 오류 시 로그 출력
-                stopAudioCapture();
+                // 녹음이 끝나기 전까지 대기
+                process.waitFor();
+                System.out.println("녹음 완료: " + audioFilePath);
+            } catch (IOException | InterruptedException e) {
+                System.err.println("녹음 중 오류 발생: " + e.getMessage());
             }
         }).start();
     }
@@ -561,7 +544,7 @@ public class AIInterviewService {
 
     public Map<Long, String> userResponses = new HashMap<>();
 
-    // 전체 패드백 응답 저장 메서드
+    // 전체 피드백 응답 저장 메서드
     public void saveUserResponse(AIInterview aiInterview, String question, String response) {
         if ("전체 피드백".equals(aiInterview.getFeedbackType())) {
             AIInterviewFF aiInterviewFF = new AIInterviewFF();
