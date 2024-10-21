@@ -214,24 +214,24 @@ public class AIInterviewService {
 
         new Thread(() -> {
             String audioDirectoryPath = "/home/ubuntu/AWS-chugpuff/resources"; // 절대 경로
-            String audioFilePath = audioDirectoryPath + "/captured_audio.wav";
+            String audioFilePath = audioDirectoryPath + "/captured_audio.wav"; // 파일명 고정
 
             // 디렉토리 확인 및 생성
             File audioDirectory = new File(audioDirectoryPath);
             if (!audioDirectory.exists()) {
                 if (!audioDirectory.mkdirs()) {
-                    System.err.println("Failed to create directory: " + audioDirectoryPath);
+                    System.err.println("디렉토리 생성 실패: " + audioDirectoryPath);
                     return;
                 }
             }
 
             File audioFile = new File(audioFilePath);
 
-            // 파일이 존재하면 삭제하고 덮어쓰기 준비
+            // 파일이 존재하면 삭제 후 덮어쓰기 준비
             if (audioFile.exists()) {
-                System.out.println("Existing file found, deleting: " + audioFilePath);
+                System.out.println("기존 파일 발견, 삭제 중: " + audioFilePath);
                 if (!audioFile.delete()) {
-                    System.err.println("Failed to delete existing file: " + audioFilePath);
+                    System.err.println("기존 파일 삭제 실패: " + audioFilePath);
                     return;
                 }
             }
@@ -240,25 +240,25 @@ public class AIInterviewService {
                 AudioFormat format = new AudioFormat(44100, 16, 1, true, true);
                 DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
-                System.out.println("Opening microphone...");
+                System.out.println("마이크 열기 시도 중...");
                 microphone = (TargetDataLine) AudioSystem.getLine(info);
-                microphone.open(format);  // 마이크를 열기 시도
+                microphone.open(format);  // 마이크 열기
                 microphone.start();
 
-                System.out.println("Microphone opened and audio capture started...");
+                System.out.println("마이크가 열렸고, 오디오 캡처 시작...");
 
                 // 오디오 파일을 저장하는 로직
                 AudioInputStream audioStream = new AudioInputStream(microphone);
-                AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);  // 파일 작성 시도
-                System.out.println("Audio data written to file: " + audioFilePath);
+                AudioSystem.write(audioStream, AudioFileFormat.Type.WAVE, audioFile);  // 파일 작성
+                System.out.println("오디오 데이터가 파일에 저장됨: " + audioFilePath);
 
             } catch (LineUnavailableException e) {
                 System.err.println("LineUnavailableException: " + e.getMessage());
-                e.printStackTrace();  // 마이크 장치가 열리지 않을 때 로그 출력
+                e.printStackTrace();  // 마이크 장치 열기 실패 시 로그 출력
                 stopAudioCapture();
             } catch (IOException e) {
                 System.err.println("IOException: " + e.getMessage());
-                e.printStackTrace();  // 파일 저장 과정에서 문제가 있을 때 로그 출력
+                e.printStackTrace();  // 파일 저장 오류 시 로그 출력
                 stopAudioCapture();
             }
         }).start();
@@ -273,7 +273,7 @@ public class AIInterviewService {
         // 파일 존재 여부 확인
         File audioFile = new File(audioFilePath);
         if (!audioFile.exists()) {
-            System.err.println("Audio file not found: " + audioFilePath);
+            System.err.println("오디오 파일을 찾을 수 없음: " + audioFilePath);
         }
 
         Map<String, String> response = new HashMap<>();
