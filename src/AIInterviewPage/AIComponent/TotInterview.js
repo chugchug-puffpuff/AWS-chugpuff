@@ -2,6 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './TotInterview.css';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 // 타이핑 효과
 const TypingEffect = ({ text = '', speed, onComplete }) => {
@@ -63,7 +66,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   useEffect(() => {
     const fetchFirstQuestion = async () => {
       try {
-        const firstQuestionResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/start`, {}, {
+        const firstQuestionResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/start`, {}, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           }
@@ -72,8 +75,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
         setCurrentQuestion(question);
         setStorageQuestion(prev => [...prev, question])
         setTtsAudioUrl(ttsAudioUrl);
-        // const audioInstance = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`);
-        const audioInstance = new Audio(`/resources/output.mp3?timestamp=${new Date().getTime()}`); // ttsAudioUrl을 사용하여 오디오 인스턴스 생성
+        const audioInstance = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`); // ttsAudioUrl을 사용하여 오디오 인스턴스 생성
 
         const playAudio = async () => {
           try {
@@ -101,7 +103,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   const fetchNextQuestion = async () => {
     setNextQuestion(false);
     try {
-      const response = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/next-question`, {}, {
+      const response = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/next-question`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -115,8 +117,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
       setCurrentQuestion(question);
       setStorageQuestion(prev => [...prev, question])
       setTtsAudioUrl(ttsAudioUrl);
-      // const audio = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`);
-      const audio = new Audio(`/resources/output.mp3?timestamp=${new Date().getTime()}`);
+      const audio = new Audio(`/output.mp3?timestamp=${new Date().getTime()}`);
       audio.play();
       setTimeout(() => {
         setIsQuestionTypingComplete(true);
@@ -132,7 +133,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   const sendAnswerStartRequest = async () => {
     setIsQuestionTypingCompleteB(false); // 녹음시작 버튼 비활성화
     try {
-      await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/answer-start`, {}, {
+      await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/answer-start`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -148,7 +149,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   const handleCompleteAnswer = async () => {
     setAnswerButton(false); // 답변 버튼 비활성화
     try {
-      const completeResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/answer-complete?timestamp=${new Date().getTime()}`, {}, {
+      const completeResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/answer-complete?timestamp=${new Date().getTime()}`, {}, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Cache-Control': 'no-cache'  // 캐시 방지 헤더 추가
@@ -164,8 +165,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   // 변환 요청
   const convertAnswer = async () => {
     console.log('변환요청');
-    // const filePath = '/captured_audio.wav';
-    const filePath = '/resources/captured_audio.wav';
+    const filePath = '/captured_audio.wav';
     const response = await fetch(filePath);
     const blob = await response.blob();
     const formData = new FormData();
@@ -175,7 +175,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
     console.log('FormData to be sent:', formData);
     try {
       // 사용자의 답변을 변환하는 요청 보내기
-      const convertResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/convert-answer`, formData, {
+      const convertResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/convert-answer`, formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data'
@@ -197,7 +197,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
     setIsInterviewEnded(true);
     setFeedbackResponse(false);
     try {
-      const feedbackResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/end`, {}, {
+      const feedbackResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/end`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -220,6 +220,13 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
       handleEndInterview(); // 시간이 0이 되면 handleEndInterview 실행
     }
   }, [timeLeft, handleEndInterview]);
+
+  const formattedText = feedback
+    .replace(/전체 피드백:/g, '<span class="bold-1">전체 피드백</span>')
+    .replace(/전체피드백:/g, '<span class="bold-1">전체피드백</span>')
+    .replace(/(##.*?:)/g, '<span class="bold">$1</span>')
+    .replace(/##/g, '')
+    .replace(/(종합적인 피드백:)/g, '<span class="bold">$1</span>');
 
   // 한 세트의 질문&답변이 모일 경우
   const renderHistoryItem = useCallback(() => {
@@ -331,7 +338,13 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
                 <div className="text-wrapper-57">치치폭폭 피드백 AI</div>
               </div>
               {feedbackResponse ? (
-                <p className="InterviewPlay-p">{feedback}</p>
+                <ReactMarkdown
+                  className="InterviewPlay-p"
+                  remarkPlugins={[remarkGfm]} 
+                  rehypePlugins={[rehypeRaw]}
+                >
+                  {formattedText}
+                </ReactMarkdown>
               ):(
                 <p className="InterviewPlay-p">피드백 요청중입니다. 잠시만 기다려 주세요.</p>
               )}
