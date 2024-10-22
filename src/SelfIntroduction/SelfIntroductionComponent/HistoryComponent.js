@@ -17,7 +17,7 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
           throw new Error('No token found');
         }
 
-        const response = await axios.get(`http://13.124.149.28:8080/api/selfIntroduction/${es_no}`, {
+        const response = await axios.get(`http://localhost:8080/api/selfIntroduction/${es_no}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -43,7 +43,7 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
   
       const newSaveStatus = !selfIntroductionData.save;
   
-      await axios.post(`http://13.124.149.28:8080/api/selfIntroduction/save/${es_no}`, {
+      await axios.post(`http://localhost:8080/api/selfIntroduction/save/${es_no}`, {
         save: newSaveStatus,
       }, {
         headers: {
@@ -57,7 +57,7 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
       }));
   
       if (newSaveStatus) {
-        const response = await axios.get('http://13.124.149.28:8080/api/selfIntroduction/saved', {
+        const response = await axios.get('http://localhost:8080/api/selfIntroduction/saved', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -87,9 +87,15 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
 
   const formattedText = es_feedback
     .replace(/\n\n/g, '\n\n&nbsp;\n\n')
-    .replace(/(\n#? )(.+?:)/g, '$1<span class="bold">$2</span>')
     .replace(/피드백:/g, '피드백')
-    .replace(/자기소개서:/g, '자기소개서');
+    .replace(/자기소개서:/g, '자기소개서')
+    .replace(/맞춤법 및 문법:/g, '<span class="bold">맞춤법 및 문법:</span>')
+    .replace(/대체 단어 추천:/g, '<span class="bold">대체 단어 추천:</span>')
+    .replace(/질문 의도와 답변 방향성:/g, '<span class="bold">질문 의도와 답변 방향성:</span>')
+    .replace(/(질문\d+:)/g, '<span class="bold">$1</span>')
+    .replace(/(답변\d+:)/g, '<span class="bold">$1</span>')
+    .replace(/(질문 \d+:)/g, '<span class="bold">$1</span>')
+    .replace(/(답변 \d+:)/g, '<span class="bold">$1</span>');
 
   return (
     <div className="HistoryComponent-frame-12">
