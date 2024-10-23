@@ -17,7 +17,7 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
           throw new Error('No token found');
         }
 
-        const response = await axios.get(`http://localhost:8080/api/selfIntroduction/${es_no}`, {
+        const response = await axios.get(`http://13.124.149.28:8080/api/selfIntroduction/${es_no}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -43,7 +43,7 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
   
       const newSaveStatus = !selfIntroductionData.save;
   
-      await axios.post(`http://localhost:8080/api/selfIntroduction/save/${es_no}`, {
+      await axios.post(`http://13.124.149.28:8080/api/selfIntroduction/save/${es_no}`, {
         save: newSaveStatus,
       }, {
         headers: {
@@ -57,7 +57,7 @@ const HistoryComponent = ({ es_no, reload, reloadHistory }) => {
       }));
   
       if (newSaveStatus) {
-        const response = await axios.get('http://localhost:8080/api/selfIntroduction/saved', {
+        const response = await axios.get('http://13.124.149.28:8080/api/selfIntroduction/saved', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
