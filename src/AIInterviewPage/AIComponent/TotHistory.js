@@ -11,7 +11,7 @@ const TotHistory = ({ interviewId, userName }) => {
   useEffect(() => {
     const fetchInterviewData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/aiinterview/${interviewId}`, {
+        const response = await axios.get(`http://13.124.149.28:8080/api/aiinterview/${interviewId}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
