@@ -66,7 +66,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   useEffect(() => {
     const fetchFirstQuestion = async () => {
       try {
-        const firstQuestionResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/start`, {}, {
+        const firstQuestionResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/start`, {}, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           }
@@ -103,7 +103,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   const fetchNextQuestion = async () => {
     setNextQuestion(false);
     try {
-      const response = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/next-question`, {}, {
+      const response = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/next-question`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -133,7 +133,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   const sendAnswerStartRequest = async () => {
     setIsQuestionTypingCompleteB(false); // 녹음시작 버튼 비활성화
     try {
-      await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/answer-start`, {}, {
+      await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/answer-start`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -149,7 +149,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
   const handleCompleteAnswer = async () => {
     setAnswerButton(false); // 답변 버튼 비활성화
     try {
-      const completeResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/answer-complete?timestamp=${new Date().getTime()}`, {}, {
+      const completeResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/answer-complete?timestamp=${new Date().getTime()}`, {}, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Cache-Control': 'no-cache'  // 캐시 방지 헤더 추가
@@ -175,7 +175,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
     console.log('FormData to be sent:', formData);
     try {
       // 사용자의 답변을 변환하는 요청 보내기
-      const convertResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/convert-answer`, formData, {
+      const convertResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/convert-answer`, formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data'
@@ -197,7 +197,7 @@ const TotInterview = ({ selectedType, selectedFeedback }) => {
     setIsInterviewEnded(true);
     setFeedbackResponse(false);
     try {
-      const feedbackResponse = await axios.post(`http://localhost:8080/api/aiinterview/${aiinterviewNo}/end`, {}, {
+      const feedbackResponse = await axios.post(`http://13.124.149.28:8080/api/aiinterview/${aiinterviewNo}/end`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
