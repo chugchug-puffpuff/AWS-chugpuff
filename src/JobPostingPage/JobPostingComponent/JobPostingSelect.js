@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './JobPostingSelect.css';
 import axios from 'axios';
+import distance_icon from '../../Icon/distance.png'
+import keyboard_arrow_down_icon from '../../Icon/keyboard_arrow_down.png'
+import keyboard_arrow_up_icon from '../../Icon/keyboard_arrow_up.png'
 
 const JobPostingSelect = ({ setSelectedDetailRegion, setSelectedJobMidname, setSelectedJobKeyword }) => {
   const [regionToggle, setRegionToggle] = useState(false);
@@ -39,7 +42,7 @@ const JobPostingSelect = ({ setSelectedDetailRegion, setSelectedJobMidname, setS
   // useEffect(() => {
   //   if (selectedRegion) {
   //     const regionName = regions[selectedRegion];
-  //     axios.get(`http://13.124.149.28:8080/api/job-postings/regions?regionName=${regionName}`, {
+  //     axios.get(`http://localhost:8080/api/job-postings/regions?regionName=${regionName}`, {
   //       headers: {
   //         'Authorization': `Bearer ${localStorage.getItem('token')}`
   //       }
@@ -75,12 +78,11 @@ const JobPostingSelect = ({ setSelectedDetailRegion, setSelectedJobMidname, setS
       if (regionName === "세종특별자치시") {setDetailRegions(["세종특별자치시"])}
     }
   })
-
   // 직무 목록을 반환하는 엔드포인트
   // useEffect(() => {
   //   if (selectedJob) {
   //     const encodedJob = encodeURIComponent(selectedJob);
-  //     axios.get(`http://13.124.149.28:8080/api/job-postings/job-names?jobMidName=${encodedJob}`)
+  //     axios.get(`http://localhost:8080/api/job-postings/job-names?jobMidName=${encodedJob}`)
   //       .then(response => {
   //         setJobKeywords(response.data);
   //       })
@@ -114,6 +116,7 @@ const JobPostingSelect = ({ setSelectedDetailRegion, setSelectedJobMidname, setS
       if (selectedJob === "공공·복지") {setJobKeywords(["가족상담","캠페이너","도서관사서","노인복지","놀이치료","평생교육사","도서관리","돌봄교사","미술치료","보호상담원","사무국장","방과후아카데미","목회자","방문목욕","방문요양","사무직","사례관리","사회복지사","아동보육","생활복지사","아동복지","생활지도원","생활지원사","음악치료","심리치료사","인지치료","요양보호사","자원봉사","작업치료","임기제공무원","장애인복지","군인·부사관","청소년복지","병역특례","호스피스","재활교사","EAP상담","직업상담사","MARC구축","청소년지도사","특수교사","활동지원사","감각통합치료사","언어치료사"])}
     }
   })
+
 
   const handleRegionClick = (region) => {
     setSelectedRegion(region);
@@ -194,15 +197,15 @@ const JobPostingSelect = ({ setSelectedDetailRegion, setSelectedJobMidname, setS
           <div className="JobPostingSelect-toggle-wrapper">
             <div className="JobPostingSelect-frame-5" onClick={() => setRegionToggle(!regionToggle)}>
               <img
-                className="JobPostingSelect-img"
+                className="JobPostingSelect-distance"
                 alt="Distance"
-                src="https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/distance@2x.png"
+                src={distance_icon}
               />
               <div className="JobPostingSelect-text-wrapper-4">지역</div>
               <img
                 className="JobPostingSelect-img"
                 alt="Keyboard arrow down"
-                src={regionToggle ? "https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/keyboard-arrow-up@2x.png" : "https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/keyboard-arrow-down@2x.png"}
+                src={regionToggle ? keyboard_arrow_up_icon : keyboard_arrow_down_icon}
               />
             </div>
             {regionToggle && (
@@ -249,7 +252,7 @@ const JobPostingSelect = ({ setSelectedDetailRegion, setSelectedJobMidname, setS
               <img
                 className="JobPostingSelect-img"
                 alt="Keyboard arrow down"
-                src={jobToggle ? "https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/keyboard-arrow-up@2x.png" : "https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/keyboard-arrow-down@2x.png"}
+                src={jobToggle ? keyboard_arrow_up_icon : keyboard_arrow_down_icon}
               />
             </div>
             {jobToggle && (
