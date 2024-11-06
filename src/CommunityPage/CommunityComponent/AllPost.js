@@ -4,6 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AllPost.css';
 import Pagination from '../../Route/Pagination.js';
+import keyboard_arrow_down_icon from '../../Icon/keyboard_arrow_down.png'
+import keyboard_arrow_up_icon from '../../Icon/keyboard_arrow_up.png'
+import sms_icon from '../../Icon/sms.png'
+import favorite_icon from '../../Icon/favorite.png'
 
 // 날짜 형식을 0000-00-00 00:00:00으로 변환
 const formatDate = (dateString) => {
@@ -33,7 +37,7 @@ const PostList = ({ boardNo, boardTitle, category, boardDate, commentCount, like
               <img
                 className="AllPost-comment"
                 alt="Sms"
-                src="https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/6688fccfcda281749136af44/img/sms@2x.png"
+                src={sms_icon}
               />
               <div className="AllPost-text-wrapper-10">{commentCount}</div>
             </div>
@@ -41,7 +45,7 @@ const PostList = ({ boardNo, boardTitle, category, boardDate, commentCount, like
               <img
                 className={`AllPost-like ${liked ? 'liked' : ''}`}
                 alt="Favorite"
-                src="https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/6688fccfcda281749136af44/img/favorite@2x.png"
+                src={favorite_icon}
               />
               <div className="AllPost-text-wrapper-10">{likes}</div>
             </div>
@@ -76,7 +80,7 @@ const AllPost = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://13.124.149.28:8080/api/board', {
+        const response = await axios.get('http://localhost:8080/api/board', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -100,7 +104,7 @@ const AllPost = () => {
 
     const fetchLikedPosts = async () => {
       try {
-        const response = await axios.get('http://13.124.149.28:8080/api/board/liked', {
+        const response = await axios.get('http://localhost:8080/api/board/liked', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -228,9 +232,7 @@ const AllPost = () => {
                   <img
                     className="AllPost-img"
                     alt="Keyboard arrow down & up"
-                    src={sortToggle 
-                      ? "https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/keyboard-arrow-up@2x.png" 
-                      : "https://cdn.animaapp.com/projects/666f9293d0304f0ceff1aa2f/releases/66ba069ad632e20f0c1152a0/img/keyboard-arrow-down@2x.png"}
+                    src={sortToggle ? keyboard_arrow_up_icon : keyboard_arrow_down_icon}
                   />
                 </div>
                 <div className="AllPost-frame-21">
