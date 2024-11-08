@@ -80,7 +80,7 @@ const AllPost = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/board', {
+        const response = await axios.get('http://13.124.149.28:8080/api/board', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -104,7 +104,7 @@ const AllPost = () => {
 
     const fetchLikedPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/board/liked', {
+        const response = await axios.get('http://13.124.149.28:8080/api/board/liked', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
