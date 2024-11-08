@@ -63,7 +63,7 @@ const MyCommentBoard = ({ setPostCount }) => {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         };
 
-        const commentResponse = await axios.get('http://localhost:8080/api/comment/user', config);
+        const commentResponse = await axios.get('http://13.124.149.28:8080/api/comment/user', config);
         const boardNos = [...new Set(commentResponse.data.map(comment => comment.boardNo))];
 
         const boardPromises = boardNos.map(boardNo => 
@@ -89,7 +89,7 @@ const MyCommentBoard = ({ setPostCount }) => {
 
     const fetchLikedPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/board/liked', {
+        const response = await axios.get('http://13.124.149.28:8080/api/board/liked', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
