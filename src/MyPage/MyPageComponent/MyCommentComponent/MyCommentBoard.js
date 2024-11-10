@@ -68,7 +68,7 @@ const MyCommentBoard = ({ setPostCount }) => {
         const boardNos = [...new Set(commentResponse.data.map(comment => comment.boardNo))];
 
         const boardPromises = boardNos.map(boardNo => 
-          axios.get(`http://localhost:8080/api/board/${boardNo}`, config)
+          axios.get(`http://13.124.149.28:8080/api/board/${boardNo}`, config)
         );
 
         const boardResponses = await Promise.all(boardPromises);
