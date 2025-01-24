@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 치치폭폭 (취업•취준 뽀개고, 뽀개자)
+chat GPT를 활용한 AI 모의면접 및 자기소개서 첨삭을 제공하는 통합 취업 지원 서비스입니다.
 
 ## Available Scripts
 
