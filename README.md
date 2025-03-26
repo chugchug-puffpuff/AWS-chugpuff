@@ -64,5 +64,6 @@ AI 모의면접, 자기소개서 첨삭, 취업공고 검색, 커뮤니티 기�
 
 ## 최종보고서
 ###### 배포 후 화면 및 설계 과정이 담겨있습니다.
-[치치폭폭_최종보고서.pdf](https://github.com/user-attachments/files/19338067/_.pdf)
+[최종보고서.pdf](https://github.com/user-attachments/files/19464605/default.pdf)
+
 
